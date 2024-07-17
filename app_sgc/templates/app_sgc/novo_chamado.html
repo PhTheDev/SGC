@@ -1,0 +1,70 @@
+{% extends "app_sgc/base_colaborador.html" %}
+
+{% block content %}
+<div style="background-color: #F6F6F6; border-radius: 15px; padding: 4px 20px 20px 20px; margin-top: 10px;">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <a style="display: inline ;">   <i class="bi bi-plus-lg" style="font-size: 25px; color: rgb(65, 62, 62);"></i>
+        <h4 style="display: inline;">Novo Chamado</h4> </a>
+    </div>
+
+    <div style="margin: 10px;">
+        <form class="row g-3" action="{% url 'novo_chamado' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="col-12" style="margin-top: 30px;">
+                <label for="assuntochamado" class="form-label">Assunto do Chamado:</label>
+                <input type="text" name="assuntochamado" class="form-control" id="assuntochamado" required>
+            </div> 
+            <div class="col-12" style="margin-top: 30px;">
+                <label for="relatochamado" class="form-label">Relato do Chamado:</label>
+                <textarea class="form-control" name="relatochamado" id="relatochamado" required></textarea>
+            </div>
+            <div class="col-12">
+                <label for="localatendimento" class="form-label">Local de Atendimento:</label>
+                <select class="form-control" id="localatendimento" name="localatendimento" required>
+                    {% for valor, descricao in locais %}
+                        <option value="{{ valor }}">{{ descricao }}</option>
+                    {% endfor %}
+                </select>
+            </div>        
+            <div class="col-12">    
+                <label for="fileUpload" class="form-label">Imagens:</label>
+                <input type="file" id="fileUpload" name="fileUpload[]" multiple accept="image/*">
+                <div id="preview"></div>
+            </div>
+            <div class="col-12">
+                <label for="motivos" class="form-label">Motivo(s) do Chamado:</label>
+                <select class="form-select" id="motivos" name="motivos" size="3" multiple aria-label="Size 3 select example" required>
+                    {% for motivo in motivos %}
+                        <option value="{{ motivo.id }}">{{ motivo.motivo }}</option>
+                    {% endfor %}
+                </select>              
+            </div>
+
+            <div class="col-12" style="margin-top: 30px;">
+                <button type="submit" class="btn btn-primary" style="background-color: #1c3e20; border-color: gray;">ENVIAR</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    document.getElementById('fileUpload').addEventListener('change', function(event) {
+        const files = event.target.files;
+        const preview = document.getElementById('preview');
+        preview.innerHTML = ''; // Limpa qualquer pré-visualização existente
+
+        for (const file of files) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '200px';
+                img.style.margin = '10px';
+                preview.appendChild(img);
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+
+{% endblock %}

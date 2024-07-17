@@ -1,0 +1,111 @@
+{% extends "app_sgc/base.html" %}
+{% load static %}
+
+{% block content %}
+
+{% if not chamados %}
+<div class="container d-flex justify-content-center align-items-center" style="height: 85vh;">
+    <div class="text-center">
+        <img src="{% static 'img/robosinho.gif' %}" alt="robo" class="img-fluid" style="max-width: 100%; height: auto;">
+        <h4>Não existe chamado em Aberto!</h4>
+    </div>
+</div>
+{% endif %}
+{% if chamados %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <a style="display: inline ;">   <i class="bi-clipboard-fill" style="font-size: 25px; color: rgb(65, 62, 62);"></i>
+    <h4 style="display: inline;">Chamados Recebidos</h4> </a>
+</div>
+    <div class="accordion" id="accordionExample">
+        {% for chamado in chamados %}
+            <div class="accordion-item {% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}">
+                <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
+                        <div class="w-100 d-flex justify-content-between align-items-center">
+                            <div>
+                                <b>Protocolo:</b> {{ chamado.protocolo }}
+                            </div>
+                            <div>
+                                <b>Assunto:</b> {{ chamado.assunto_chamado }}
+                            </div>
+                            <div>
+                                <b>Data/Hora do Chamado:</b> {{ chamado.data_hora_chamado }}
+                            </div>
+                        </div>
+                    </button>
+                </h2>
+                <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <ul class="nav nav-tabs" id="myTab{{ forloop.counter }}" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="chamado-tab{{ forloop.counter }}" data-bs-toggle="tab" data-bs-target="#chamado{{ forloop.counter }}" type="button" role="tab" aria-controls="chamado" aria-selected="true">Chamado</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent{{ forloop.counter }}">
+                            <div class="tab-pane fade show active" id="chamado{{ forloop.counter }}" role="tabpanel" aria-labelledby="chamado-tab{{ forloop.counter }}">
+                                <div class="col-md-12 mx-auto mt-1">
+                                    <h5><b>Dados do Chamado</b></h5>
+                                    <hr />
+                                    <div style="border: 0;" id="elementoExibido">
+                                        <div class="col-md-6">
+                                            <label>Assunto:</label>
+                                            <input type="text" name="assunto" id="assunto" class="form-control assunto-campos" value="{{ chamado.assunto_chamado }}" readonly>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <label>Relato:</label>
+                                            <input id="relato"  type="text" name="relato" class="form-control relato-campos" value="{{ chamado.relato_chamado }}" readonly>                                
+                                        </div>
+                                    
+                                        <div class="col-md-6">
+                                            <label>Local:</label>
+                                            <input id="local" type="local" name="local" class="form-control local-campos" value="{{ chamado.local_suporte }}" readonly>
+                                        </div>
+                                
+                                        <div class="col-md-6">
+                                            <label>Motivo:</label>
+                                            <input id="motivo" type="text" name="motivo" required class="form-control denunciante-campos" value="{{ chamado.get_motivo_chamado }}" readonly style="margin-bottom: 15px;">
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <label>Imagens:</label>
+                                            {% for imagem in chamado.imagem_chamado.all %}
+                                                {% if imagem %}
+                                                    <img src="{{ imagem.imagem.url }}" alt="Imagem do Chamado" style="max-width: 100px; max-height: 100px; margin-right: 10px;">
+                                                {% else %}
+                                                    <p>Não existe imagem</p>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+
+                                        <!-- Formulário para editar relatosuporte e prazo -->
+                                        <form action="{% url 'recebidos' %}" method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="protocolo" value="{{ chamado.protocolo }}">
+                                            <div class="col-12" style="margin-top: 30px;">
+                                                <label for="relatosuporte" class="form-label">Relato do Suporte:</label>
+                                                <textarea class="form-control" name="relatosuporte" id="relatosuporte" required></textarea>
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="relatochamado" class="form-label">Prazo:</label>
+                                                <input type="datetime-local" required name="prazo" style="margin-top: 20px;">
+                                            </div>
+                                            <br>
+                                        
+                                            <div class="d-grid gap-2 d-md-block">
+                                                <button class="btn btn-primary" type="submit" name="submit_button" value="finalizar" style="background-color: #BB0A21;">FINALIZAR</button>
+                                                <button class="btn btn-primary" type="submit" name="submit_button" value="salvar" style="background-color: darkgreen;">SALVAR</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% endblock %}
