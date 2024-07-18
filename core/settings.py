@@ -92,11 +92,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'SGC',
-        'USER': 'postgres',
-        'PASSWORD': 'crmvgo',
-        'HOST': 'localhost',
-        'PORT': '5433',
+        'NAME': 'nome', # coloque o nome do seu banco de dados aqui
+        'USER': 'user', # coloque o usuario do seu banco de dados aqui
+        'PASSWORD': 'password', # coloque sua senha do banco de dados aqui
+        'HOST': 'localhost', # coloque o host do seu banco de dados aqui
+        'PORT': '5433', # coloque a porta utilizada no seu banco de dados aqui
     }
 }
 
