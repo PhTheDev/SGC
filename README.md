@@ -1,5 +1,5 @@
 # Sistema de Gerenciamento de Chamados
-Este projeto foi idealizado por Cesar Augusto e implementado/codificado por Pedro Henrique Faria dos Santos Soares durante o estágio remunerado no Conselho Regional de Medicina Veterinária do Estado de Goiás (CRMV-GO).
+Este projeto foi idealizado por Cesar Augusto e implementado/codificado por Pedro Henrique Faria dos Santos durante o estágio remunerado no Conselho Regional de Medicina Veterinária do Estado de Goiás (CRMV-GO).
 
 Foi utilizado para desenvolvimento principalmente o framework **Django** do **Python** e o **Bootstrap** (Framework front-end), alem de tecnologias como **HTML/CSS** e a liguagem de programação **JavaScript**.
 
