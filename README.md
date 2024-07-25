@@ -6,4 +6,4 @@ Foi utilizado para desenvolvimento principalmente o framework **Django** do **Py
 ## Descrição
 O Sistema de Gerenciamento de Chamados é um sistema de tickets desenvolvido para melhorar a organização, padronização e facilidade na comunicação entre os colaboradores do conselho e os profissionais da área de TI. Ele permite que os usuários façam chamados para resolver problemas de maneira eficiente e estruturada, além de acompanhar os chamados em aberto.
 
-### OBS: Configurado para ser usado com PostgreSQL na hora do uso troque os campos necessarios no settings.py dentro de core, alem disso para configurar o Login com google entrar em https://console.cloud.google.com/ e configurar o OAuth2.
+### OBS: Configurado para ser usado com PostgreSQL, usar troque os campos necessarios no settings.py dentro de core, alem disso para configurar o Login com google entrar em https://console.cloud.google.com/ e configurar o OAuth2.
